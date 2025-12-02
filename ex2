@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    public class Counter
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+
+        public Counter(string name, int value)
+        {
+            Name = name;
+            Value = value;
+        }
+        public static Counter operator +(Counter c, int amount)
+        {
+            return new Counter(c.Name, c.Value + amount);
+        }
+        public int this[string key]
+        {
+            get
+            {
+                if (key.ToLower() == "value")
+                    return Value;
+
+                throw new ArgumentException("Неизвестный индекс");
+            }
+            set
+            {
+                if (key.ToLower() == "value")
+                    Value = value;
+                else
+                    throw new ArgumentException("Неизвестный индекс");
+            }
+        }
+        public override string ToString()
+        {
+            return $"{Name}: {Value}";
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            var c = new Counter("Счётчик", 10);
+            c = c + 5;
+
+            Console.WriteLine(c);
+
+            c["value"] = 20;
+            Console.WriteLine(c["value"]);  
+        }
+    }
+}
