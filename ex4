@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    public class Book
+    {
+        private string[] chapters = new string[100]; 
+        public string this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= chapters.Length)
+                    throw new IndexOutOfRangeException();
+
+                return chapters[index];
+            }
+            set
+            {
+                if (index < 0 || index >= chapters.Length)
+                    throw new IndexOutOfRangeException();
+
+                chapters[index] = value;
+            }
+        }
+        public override string ToString()
+        {
+            var result = new System.Text.StringBuilder();
+
+            int number = 1;
+            foreach (var chapter in chapters)
+            {
+                if (!string.IsNullOrEmpty(chapter))
+                    result.AppendLine($"{number}. {chapter}");
+                number++;
+            }
+
+            return result.ToString().TrimEnd();
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            var book = new Book();
+
+            book[0] = "Введение";
+            book[1] = "Глава 1";
+
+            Console.WriteLine(book[0]);
+            Console.WriteLine(book);
+        }
+    }
+
+}
